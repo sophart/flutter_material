@@ -14,8 +14,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'package:shrine/model/product.dart';
 import 'package:shrine/model/products_repository.dart';
+
+import 'supplemental/asymmetric_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -34,6 +37,7 @@ class HomePage extends StatelessWidget {
     return products.map((product) {
       return Card(
         clipBehavior: Clip.antiAlias,
+        elevation: 0.0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -49,11 +53,14 @@ class HomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
                       product.name,
-                      style: theme.textTheme.titleLarge,
+                      style: theme.textTheme.labelLarge,
+                      softWrap: false,
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
                     const SizedBox(
@@ -63,7 +70,7 @@ class HomePage extends StatelessWidget {
                       formatter.format(
                         product.price,
                       ),
-                      style: theme.textTheme.titleSmall,
+                      style: theme.textTheme.bodySmall,
                     ),
                   ],
                 ),
@@ -79,43 +86,50 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: Return an AsymmetricView (104)
-    // TODO: Pass Category variable to AsymmetricView (104)
-    return Scaffold(
-      // TODO: Add app bar (102)
-      appBar: AppBar(
-        title: const Text(
-          'SHRINE',
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
-              semanticLabel: 'search',
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.tune,
-              semanticLabel: 'filter',
-            ),
-          )
-        ],
-      ),
-      // TODO: Add a grid view (102)
-      body: GridView.count(
-        crossAxisCount: 2,
-        padding: const EdgeInsets.all(16.0),
-        childAspectRatio: 8.0 / 9.0,
-        children: _buildGridCards(context),
-      ),
-      // TODO: Set resizeToAvoidBottomInset (101)
-      resizeToAvoidBottomInset: false,
+    return AsymmetricView(
+      products: ProductsRepository.loadProducts(Category.all),
     );
+    // TODO: Pass Category variable to AsymmetricView (104)
+    // return Scaffold(
+    //   // TODO: Add app bar (102)
+    //   appBar: AppBar(
+    //     title: const Text(
+    //       'SHRINE',
+    //     ),
+    //     leading: IconButton(
+    //       icon: const Icon(Icons.menu),
+    //       onPressed: () {},
+    //     ),
+    //     actions: [
+    //       IconButton(
+    //         onPressed: () {},
+    //         icon: const Icon(
+    //           Icons.search,
+    //           semanticLabel: 'search',
+    //         ),
+    //       ),
+    //       IconButton(
+    //         onPressed: () {},
+    //         icon: const Icon(
+    //           Icons.tune,
+    //           semanticLabel: 'filter',
+    //         ),
+    //       )
+    //     ],
+    //   ),
+    //   // TODO: Add a grid view (102)
+    //   body: AsymmetricView(
+    //     products: ProductsRepository.loadProducts(Category.all),
+    //   ),
+
+    //   // body: GridView.count(
+    //   //   crossAxisCount: 2,
+    //   //   padding: const EdgeInsets.all(16.0),
+    //   //   childAspectRatio: 8.0 / 9.0,
+    //   //   children: _buildGridCards(context),
+    //   // ),
+    //   // TODO: Set resizeToAvoidBottomInset (101)
+    //   resizeToAvoidBottomInset: false,
+    // );
   }
 }
