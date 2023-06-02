@@ -21,7 +21,12 @@ import 'package:shrine/model/products_repository.dart';
 import 'supplemental/asymmetric_view.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({
+    Key? key,
+    required this.category,
+  }) : super(key: key);
+
+  final Category category;
 
   // TODO: Make a collection of cards (102)
   List<Card> _buildGridCards(BuildContext context) {
@@ -87,7 +92,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: Return an AsymmetricView (104)
     return AsymmetricView(
-      products: ProductsRepository.loadProducts(Category.all),
+      products: ProductsRepository.loadProducts(category),
     );
     // TODO: Pass Category variable to AsymmetricView (104)
     // return Scaffold(
